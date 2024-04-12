@@ -24,21 +24,29 @@ def no_curlies(filepath):
 
 @pytest.mark.usefixtures("default_baked_project")
 class TestCookieSetup(object):
+    # def test_project_name(self):
+    #     project = self.path
+    #     if pytest.param.get('project_name'):
+    #         name = system_check('ibswufe_dea')
+    #         assert project.name == name
+    #     else:
+    #         assert project.name == 'ibswufe_project'
+    
     def test_project_name(self):
-        project = self.path
+        setup_ = self.path / 'setup.py'
+        args = ['python', str(setup_), '--name']
+        p = check_output(args).decode('ascii').strip()
         if pytest.param.get('project_name'):
-            name = system_check('DrivenData')
-            assert project.name == name
+            assert p == 'ibswufe_dea'
         else:
-            print(1)
-            assert project.name == 'project_name'
+            assert p == 'ibswufe_project'
 
     def test_author(self):
         setup_ = self.path / 'setup.py'
         args = ['python', str(setup_), '--author']
         p = check_output(args).decode('ascii').strip()
         if pytest.param.get('author_name'):
-            assert p == 'DrivenData'
+            assert p == 'ibswufe_team'
         else:
             assert p == 'Your name (or your organization/company/team)'
 
@@ -48,7 +56,7 @@ class TestCookieSetup(object):
         assert no_curlies(readme_path)
         if pytest.param.get('project_name'):
             with open(readme_path) as fin:
-                assert 'DrivenData' == next(fin).strip()
+                assert 'ibswufe_dea' == next(fin).strip()
 
     def test_setup(self):
         setup_ = self.path / 'setup.py'
@@ -85,67 +93,32 @@ class TestCookieSetup(object):
         assert no_curlies(makefile_path)
 
     def test_folders(self):
-        print(self.path)
-        print(self.path.name)
-        if pytest.param.get('project_name'):
-            # project_name = self.path.name 
-            # expected_dirs = [
-            #     'data',
-            #     'data/external',
-            #     'data/interim',
-            #     'data/processed',
-            #     'data/raw',
-            #     'docs',
-            #     'models',
-            #     'notebooks',
-            #     'references',
-            #     'reports',
-            #     'reports/figures',
-            #     f'{project_name}',
-            #     f'{project_name}/data',
-            #     f'{project_name}/features',
-            #     f'{project_name}/models',
-            #     f'{project_name}/dashboard',
-            #     'tests'
-            # ]
+        setup_ = self.path / 'setup.py'
+        args = ['python', str(setup_), '--name']
+        temp_name = check_output(args).decode('ascii').strip()
+        expected_dirs = [
+            'docs',
+            'notebooks',
+            'tests',
+            'tests/test_data',
+            'tests/test_feature',
+            'tests/test_models',
+            'tests/test_dashboard',
+            f'{temp_name}',
+            f'{temp_name}/data',
+            f'{temp_name}/features',
+            f'{temp_name}/models',
+            f'{temp_name}/models/model_component',
+            f'{temp_name}/models/optim_component',
+            f'{temp_name}/models/metric_component',
+            f'{temp_name}/dashboard'
+        ]
 
-            # ignored_dirs = [
-            #     str(self.path)
-            # ]
+        ignored_dirs = [
+            str(self.path)
+        ]
 
-            # abs_expected_dirs = [str(self.path / d) for d in expected_dirs]
-            # abs_dirs, _, _ = list(zip(*os.walk(self.path)))
-            # assert len(set(abs_expected_dirs + ignored_dirs) - set(abs_dirs)) == 0
-            assert True
-        # else:
-        #     project_name = 'project_name'
-        else:
-            assert True
-        # expected_dirs = [
-        #     'data',
-        #     'data/external',
-        #     'data/interim',
-        #     'data/processed',
-        #     'data/raw',
-        #     'docs',
-        #     'models',
-        #     'notebooks',
-        #     'references',
-        #     'reports',
-        #     'reports/figures',
-        #     f'{project_name}',
-        #     f'{project_name}/data',
-        #     f'{project_name}/features',
-        #     f'{project_name}/models',
-        #     f'{project_name}/dashboard',
-        #     'tests'
-        # ]
-
-        # ignored_dirs = [
-        #     str(self.path)
-        # ]
-
-        # abs_expected_dirs = [str(self.path / d) for d in expected_dirs]
-        # abs_dirs, _, _ = list(zip(*os.walk(self.path)))
-        # assert len(set(abs_expected_dirs + ignored_dirs) - set(abs_dirs)) == 0
+        abs_expected_dirs = [str(self.path / d) for d in expected_dirs]
+        abs_dirs, _, _ = list(zip(*os.walk(self.path)))
+        assert len(set(abs_expected_dirs + ignored_dirs) - set(abs_dirs)) == 0
 

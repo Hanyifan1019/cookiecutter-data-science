@@ -7,8 +7,8 @@ from cookiecutter import main
 CCDS_ROOT = Path(__file__).parents[1].resolve()
 
 args = {
-        'project_name': 'ibswufe-dea',
-        'author_name': 'ibswufe-team',
+        'project_name': 'ibswufe_dea',
+        'author_name': 'ibswufe_team',
         'open_source_license': 'BSD-3-Clause',
         'python_interpreter': 'python'
         }
@@ -34,7 +34,7 @@ def default_baked_project(tmpdir_factory, request):
         output_dir=out_dir
     )
 
-    pn = pytest.param.get('project_name') or 'project_name'
+    pn = pytest.param.get('project_name') or 'ibswufe_project'
     
     # project name gets converted to lower case on Linux but not Mac
     pn = system_check(pn)
