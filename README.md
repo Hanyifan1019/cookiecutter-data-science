@@ -8,7 +8,7 @@ _A logical, reasonably standardized, but flexible project structure for doing an
 
 ### Requirements to use the cookiecutter template:
 -----------
- - Python 2.7 or 3.5+
+ - Python 3.6+
  - [Cookiecutter Python package](http://cookiecutter.readthedocs.org/en/latest/installation.html) >= 1.4.0: This can be installed with pip by or conda depending on how you manage your Python packages:
 
 ``` bash
@@ -26,19 +26,8 @@ $ conda install cookiecutter
 ### To start a new project, run:
 ------------
 
-    cookiecutter -c v1 https://github.com/drivendata/cookiecutter-data-science
+    cookiecutter git@github.com:Hanyifan1019/cookiecutter-data-science.git
 
-
-[![asciicast](https://asciinema.org/a/244658.svg)](https://asciinema.org/a/244658)
-
-### New version of Cookiecutter Data Science
-------------
-Cookiecutter data science is moving to v2 soon, which will entail using
-the command `ccds ...` rather than `cookiecutter ...`. The cookiecutter command
-will continue to work, and this version of the template will still be available.
-To use the legacy template, you will need to explicitly use `-c v1` to select it.
-Please update any scripts/automation you have to append the `-c v1` option (as above),
-which is available now.
 
 
 ### The resulting directory structure
@@ -47,14 +36,16 @@ which is available now.
 The directory structure of your new project looks like this: 
 
 ```
+------------
+
 ├── LICENSE
 ├── Makefile           <- Makefile with commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+│   ├── external       <- Data from third party sources.
+│   ├── interim        <- Intermediate data that has been transformed.
+│   ├── processed      <- The final, canonical data sets for modeling.
+│   └── raw            <- The original, immutable data dump.
 │
 ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
 │
@@ -67,35 +58,67 @@ The directory structure of your new project looks like this:
 ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
 │
 ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+│   └── figures        <- Generated graphics and figures to be used in reporting
 │
 ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
 │                         generated with `pip freeze > requirements.txt`
 │
 ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-├── src                <- Source code for use in this project.
-│   ├── __init__.py    <- Makes src a Python module
+│
+│
+├── {{cookiecutter.project_name}}   
+│   │                  <- Source code for use in this project.
+│   ├── __init__.py    <- Makes project a Python module
 │   │
-│   ├── data           <- Scripts to download or generate data
-│   │   └── make_dataset.py
+│   ├── data           <- Scripts to data pre-processex (ploration and cleaning)
+│   │   ├── __init__.py    
+│   │   ├── cleaning.py
+│   │   ├── exploration.py
+│   │   └── util.py
 │   │
-│   ├── features       <- Scripts to turn raw data into features for modeling
-│   │   └── build_features.py
+│   ├── features       <- Scripts to feature selection and engineering
+│   │   ├── __init__.py    
+│   │   ├── selection.py
+│   │   ├── exploration.py
+│   │   └── util.py
 │   │
-│   ├── models         <- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
+│   ├── models         <- Scripts to model training and predictions
+│   │   ├── __init__.py    
+│   │   ├── model_component     <- Model backbone and loss function
+│   │   │   └── __init__.py    
+│   │   ├── optim_component     <- The optimizer for training
+│   │   │   └── __init__.py    
+│   │   ├── metric_component    <- Metrics for evaluation
+│   │   │   └── __init__.py    
+│   │   ├── modeling.py
+│   │   ├── tuning.py
+│   │   ├── optimizer.py
+│   │   ├── evalution.py
+│   │   ├── train_model.py
+│   │   ├── predict_model.py
+│   │   └── util.py
 │   │
-│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
+│   └── dashboard  <- Scripts to create exploratory and results oriented visualizations
+│       ├── __init__.py  
+│       └── visualize.py
+│
+│
+├── tests               <- Tests for `{{ cookiecutter.repo_name }}` package
+│   ├── conftest.py 
+│   ├── test_data.py
+│   ├── test_feature.py
+│   ├── test_model.py
+│   └── test_dashboard.py
+│
 │
 └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+
+--------
 ```
 
 ## Contributing
 
-We welcome contributions! [See the docs for guidelines](https://drivendata.github.io/cookiecutter-data-science/#contributing).
+We welcome contributions! [See the docs for guidelines](https://github.com/Hanyifan1019/cookiecutter-data-science).
 
 ### Installing development requirements
 ------------
