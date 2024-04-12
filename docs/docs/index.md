@@ -1,6 +1,7 @@
 # Cookiecutter Data Science
 
 _A logical, reasonably standardized, but flexible project structure for doing and sharing data science work._
+_Based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>._
 
 ## Why use this project structure?
 
@@ -58,7 +59,7 @@ With this in mind, we've created a data science cookiecutter template for projec
 
 ### Requirements
 
- - Python 2.7 or 3.5
+ - Python >= 3.6
  - [cookiecutter Python package](http://cookiecutter.readthedocs.org/en/latest/installation.html) >= 1.4.0: `pip install cookiecutter`
 
 
@@ -67,7 +68,7 @@ With this in mind, we've created a data science cookiecutter template for projec
 Starting a new project is as easy as running this command at the command line. No need to create a directory first, the cookiecutter will do it for you.
 
 ```nohighlight
-cookiecutter https://github.com/drivendata/cookiecutter-data-science
+cookiecutter git@github.com:Hanyifan1019/cookiecutter-data-science.git
 ```
 
 ### Example
@@ -77,6 +78,8 @@ cookiecutter https://github.com/drivendata/cookiecutter-data-science
 ## Directory structure
 
 ```nohighlight
+------------
+
 ├── LICENSE
 ├── Makefile           <- Makefile with commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
@@ -102,25 +105,57 @@ cookiecutter https://github.com/drivendata/cookiecutter-data-science
 ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
 │                         generated with `pip freeze > requirements.txt`
 │
-├── setup.py           <- Make this project pip installable with `pip install -e`
-├── src                <- Source code for use in this project.
-│   ├── __init__.py    <- Makes src a Python module
+├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
+│
+│
+├── {{cookiecutter.project_name}}   
+│   │                  <- Source code for use in this project.
+│   ├── __init__.py    <- Makes project a Python module
 │   │
-│   ├── data           <- Scripts to download or generate data
-│   │   └── make_dataset.py
+│   ├── data           <- Scripts to data pre-processex (ploration and cleaning)
+│   │   ├── __init__.py    
+│   │   ├── cleaning.py
+│   │   ├── exploration.py
+│   │   └── util.py
 │   │
-│   ├── features       <- Scripts to turn raw data into features for modeling
-│   │   └── build_features.py
+│   ├── features       <- Scripts to feature selection and engineering
+│   │   ├── __init__.py    
+│   │   ├── selection.py
+│   │   ├── exploration.py
+│   │   └── util.py
 │   │
-│   ├── models         <- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
+│   ├── models         <- Scripts to model training and predictions
+│   │   ├── __init__.py    
+│   │   ├── model_component     <- Model backbone and loss function
+│   │   │   └── __init__.py    
+│   │   ├── optim_component     <- The optimizer for training
+│   │   │   └── __init__.py    
+│   │   ├── metric_component    <- Metrics for evaluation
+│   │   │   └── __init__.py    
+│   │   ├── modeling.py
+│   │   ├── tuning.py
+│   │   ├── optimizer.py
+│   │   ├── evalution.py
+│   │   ├── train_model.py
+│   │   ├── predict_model.py
+│   │   └── util.py
 │   │
-│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
+│   └── dashboard  <- Scripts to create exploratory and results oriented visualizations
+│       ├── __init__.py  
+│       └── visualize.py
+│
+│
+├── tests               <- Tests for `{{ cookiecutter.repo_name }}` package
+│   ├── conftest.py 
+│   ├── test_data.py
+│   ├── test_feature.py
+│   ├── test_model.py
+│   └── test_dashboard.py
+│
 │
 └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+
+--------
 ```
 
 ## Opinions
@@ -192,10 +227,10 @@ OTHER_VARIABLE=something
 
 #### Use a package to load these variables automatically.
 
-If you look at the stub script in `src/data/make_dataset.py`, it uses a package called [python-dotenv](https://github.com/theskumar/python-dotenv) to load up all the entries in this file as environment variables so they are accessible with `os.environ.get`. Here's an example snippet adapted from the `python-dotenv` documentation:
+If you look at the stub script in `./data/make_dataset.py`, it uses a package called [python-dotenv](https://github.com/theskumar/python-dotenv) to load up all the entries in this file as environment variables so they are accessible with `os.environ.get`. Here's an example snippet adapted from the `python-dotenv` documentation:
 
 ```python
-# src/data/dotenv_example.py
+# ./data/dotenv_example.py
 import os
 from dotenv import load_dotenv, find_dotenv
 

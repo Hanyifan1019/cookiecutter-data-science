@@ -32,26 +32,56 @@ Project Organization
     │                         generated with `pip freeze > requirements.txt`
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
+    │
+    │
+    ├── {{cookiecutter.project_name}}   
+    │   │                  <- Source code for use in this project.
+    │   ├── __init__.py    <- Makes project a Python module
     │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
+    │   ├── data           <- Scripts to data pre-processex (ploration and cleaning)
+    │   │   ├── __init__.py    
+    │   │   ├── cleaning.py
+    │   │   ├── exploration.py
+    │   │   └── util.py
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
+    │   ├── features       <- Scripts to feature selection and engineering
+    │   │   ├── __init__.py    
+    │   │   ├── selection.py
+    │   │   ├── exploration.py
+    │   │   └── util.py
     │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
+    │   ├── models         <- Scripts to model training and predictions
+    │   │   ├── __init__.py    
+    │   │   ├── model_component     <- Model backbone and loss function
+    │   │   │   └── __init__.py    
+    │   │   ├── optim_component     <- The optimizer for training
+    │   │   │   └── __init__.py    
+    │   │   ├── metric_component    <- Metrics for evaluation
+    │   │   │   └── __init__.py    
+    │   │   ├── modeling.py
+    │   │   ├── tuning.py
+    │   │   ├── optimizer.py
+    │   │   ├── evalution.py
+    │   │   ├── train_model.py
+    │   │   ├── predict_model.py
+    │   │   └── util.py
     │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
+    │   └── dashboard  <- Scripts to create exploratory and results oriented visualizations
+    │       ├── __init__.py  
+    │       └── visualize.py
+    │
+    │
+    ├── tests               <- Tests for `{{ cookiecutter.repo_name }}` package
+    │   ├── conftest.py 
+    │   ├── test_data.py
+    │   ├── test_feature.py
+    │   ├── test_model.py
+    │   └── test_dashboard.py
+    │
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
 
 --------
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+<p><small>Project based on the <a target="_blank" href="https://github.com/Hanyifan1019/cookiecutter-data-science/">cookiecutter data science project template</a>. #ibswufe-dea</small></p>
